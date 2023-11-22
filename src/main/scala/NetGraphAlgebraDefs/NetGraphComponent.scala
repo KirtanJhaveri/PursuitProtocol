@@ -1,4 +1,4 @@
-package NetGraphAlgebraDefs
+//package NetGraphAlgebraDefs
 
 trait NetGraphComponent extends Serializable
 
