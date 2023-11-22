@@ -26,7 +26,8 @@ class GraphOperationsSpec extends AnyFlatSpec with Matchers with BeforeAndAfterA
 
   "processGraph" should "return the correct successor node ID for a given node" in {
     val graph = GraphOperations.createGraph(nodes, edges)
-    val successorNodeId = GraphOperations.processGraph(nodes, 1, graph)
+    val emptyGraph = GraphOperations.createGraph(List.empty[NodeObject], List.empty[Action])
+    val successorNodeId = GraphOperations.processGraph(nodes, 1, graph,emptyGraph)
     successorNodeId shouldBe 2
   }
 }

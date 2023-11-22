@@ -2,9 +2,11 @@
 
 object Main {
   def main(args: Array[String]): Unit = {
-    val (perturbedNodes, perturbedEdges) = LoadGraph.load("https://kirtan441.s3.amazonaws.com/NetGraph_13-11-23-18-46-59.ngs.perturbed")
+    val (perturbedNodes, perturbedEdges) = LoadGraph.load(args(0))
     // Create and populate the perturbed graph
     val PerturbedGraph = GraphOperations.createGraph(perturbedNodes, perturbedEdges)
+    val (originalNodes, originalEdges) = LoadGraph.load(args(1))
+    val originalGraph = GraphOperations.createGraph(originalNodes, originalEdges)
 //    println(perturbedNodes)
 
 ////    val successors = GraphOperations.processGraph(nodes, nodeId)
@@ -22,7 +24,7 @@ object Main {
 //    println(s"Confidence Score: $confidenceScore")
 
     // Start Akka HTTP server
-    GameServer.startGameServer(perturbedNodes,PerturbedGraph)
+    GameServer.startGameServer(perturbedNodes,PerturbedGraph,originalGraph)
   }
 }
 

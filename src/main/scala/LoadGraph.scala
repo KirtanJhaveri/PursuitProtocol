@@ -2,7 +2,6 @@ import java.io.{FileInputStream, InputStream, ObjectInputStream}
 import java.net.URL
 import scala.util.Try
 import NetGraphAlgebraDefs._
-
 object LoadGraph {
 //  private val logger = LoggerFactory.getLogger(getClass)
 
@@ -15,7 +14,7 @@ object LoadGraph {
     inputStream match {
       case Some(stream) =>
         val objectInputStream = new ObjectInputStream(stream)
-        val ng = objectInputStream.readObject().asInstanceOf[List[NetGraphComponent]]
+        val ng = objectInputStream.readObject().asInstanceOf[List[NetGraphAlgebraDefs.NetGraphComponent]]
         val nodes = ng.collect { case node: NodeObject => node }
         val edges = ng.collect { case edge: Action => edge }
         objectInputStream.close() // Close the stream after use

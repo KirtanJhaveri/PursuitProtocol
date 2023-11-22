@@ -7,11 +7,11 @@ import com.google.common.graph.MutableValueGraph
 case class GetNode(nodeId: Int)
 case class GetNodeResponse(message: String)
 
-class EntityActor(nodes: List[NodeObject], graph: MutableValueGraph[NodeObject, Action]) extends Actor with ActorLogging {
+class EntityActor(nodes: List[NodeObject], perturbedGraph: MutableValueGraph[NodeObject, Action], originalGraph: MutableValueGraph[NodeObject, Action]) extends Actor with ActorLogging {
 
   def receive: Receive = {
     case GetNode(nodeId) =>
-      val response = GraphOperations.processGraph(nodes, nodeId, graph)
+      val response = GraphOperations.processGraph(nodes, nodeId,perturbedGraph,originalGraph)
       log.info(s"Actor ${self.path.name} updated with response: $response")
       if (self.path.name == "thiefActor") {
         if (response == -2) {

@@ -38,14 +38,14 @@ object GraphOperations {
     graph
   }
 
-  def processGraph(nodes: List[NodeObject], nodeId: Int, graph: MutableValueGraph[NodeObject, Action]): Int = {
+  def processGraph(nodes: List[NodeObject], nodeId: Int, perturbedGraph: MutableValueGraph[NodeObject, Action], originalGraph: MutableValueGraph[NodeObject, Action]): Int = {
     // Create a corresponding NodeObject instance
     val specificNode: NodeObject = nodes.find(_.id == nodeId).getOrElse {
       throw new NoSuchElementException(s"No node found with ID $nodeId")
     }
 
     // Get successor nodes
-    val successors: Set[NodeObject] = graph.successors(specificNode).asScala.toSet
+    val successors: Set[NodeObject] = perturbedGraph.successors(specificNode).asScala.toSet
 
     // Get incident edges
 //    val incidentEdges = graph.incidentEdges(specificNode).asScala.toSet
@@ -58,7 +58,7 @@ object GraphOperations {
 //    println("all")
 //    println(allIds)
     val jaccardIndices: Map[Int, Double] = allIds.map { id =>
-      val jaccardIndex = calculateConfidenceScore(graph, id)
+      val jaccardIndex = calculateConfidenceScore(perturbedGraph,originalGraph, id)
 //      println(s"Jaccard Index for node $id: $jaccardIndex")
       id -> jaccardIndex
     }.toMap
@@ -78,32 +78,31 @@ object GraphOperations {
   }
 
 
-  def calculateConfidenceScore(graph1: MutableValueGraph[NodeObject, Action], nodeId: Int): Double = {
-    val (originalNodes, originalEdges) = LoadGraph.load("https://kirtan441.s3.amazonaws.com/NetGraph_13-11-23-18-46-59.ngs")
-    val originalGraph = GraphOperations.createGraph(originalNodes, originalEdges)
-    val nodeInGraph1: NodeObject = graph1.nodes().asScala.find(_.id == nodeId).getOrElse {
+  def calculateConfidenceScore(perturbedGraph: MutableValueGraph[NodeObject, Action],originalGraph: MutableValueGraph[NodeObject, Action], nodeId: Int): Double = {
+
+    val nodeInPerturbed: NodeObject = perturbedGraph.nodes().asScala.find(_.id == nodeId).getOrElse {
       throw new NoSuchElementException(s"No node found with ID $nodeId in Graph 1")
     }
 
-    val nodeInGraph2: NodeObject = originalGraph.nodes().asScala.find(_.id == nodeId).getOrElse {
+    val nodeInOriginal: NodeObject = originalGraph.nodes().asScala.find(_.id == nodeId).getOrElse {
       NodeObject(-1, -1, -1, -1, -1, -1, -1, -1, -1)
     }
 
-    if (nodeInGraph2 == NodeObject(-1, -1, -1, -1, -1, -1, -1, -1, -1)) {
+    if (nodeInOriginal == NodeObject(-1, -1, -1, -1, -1, -1, -1, -1, -1)) {
       // Stop the process and return -1
       -1
     }
     else {
       val attributes = Seq(
-        (nodeInGraph1.children, nodeInGraph2.children),
-        (nodeInGraph1.props, nodeInGraph2.props),
-        (nodeInGraph1.currentDepth, nodeInGraph2.currentDepth),
-        (nodeInGraph1.propValueRange, nodeInGraph2.propValueRange),
-        (nodeInGraph1.maxDepth, nodeInGraph2.maxDepth),
-        (nodeInGraph1.maxBranchingFactor, nodeInGraph2.maxBranchingFactor),
-        (nodeInGraph1.maxProperties, nodeInGraph2.maxProperties),
-        (nodeInGraph1.storedValue, nodeInGraph2.storedValue),
-        (nodeInGraph1.valuableData, nodeInGraph2.valuableData)
+        (nodeInPerturbed.children, nodeInOriginal.children),
+        (nodeInPerturbed.props, nodeInOriginal.props),
+        (nodeInPerturbed.currentDepth, nodeInOriginal.currentDepth),
+        (nodeInPerturbed.propValueRange, nodeInOriginal.propValueRange),
+        (nodeInPerturbed.maxDepth, nodeInOriginal.maxDepth),
+        (nodeInPerturbed.maxBranchingFactor, nodeInOriginal.maxBranchingFactor),
+        (nodeInPerturbed.maxProperties, nodeInOriginal.maxProperties),
+        (nodeInPerturbed.storedValue, nodeInOriginal.storedValue),
+        (nodeInPerturbed.valuableData, nodeInOriginal.valuableData)
       )
 
       val jaccardIndices = attributes.map { case (attr1, attr2) =>

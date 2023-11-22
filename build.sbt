@@ -6,6 +6,12 @@ lazy val root = (project in file("."))
   .settings(
     name := "PursuitProtocol"
   )
+
+//scalaSource in Compile := baseDirectory.value / "src" / "main" / "scala"
+Test / classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.Flat
+test / fork := true
+run / fork := true
+
 libraryDependencies ++= Seq(
   "com.google.guava" % "guava" % "31.1-jre",
   "com.typesafe.akka" %% "akka-actor" % "2.8.0",
@@ -17,3 +23,15 @@ libraryDependencies ++= Seq(
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.9" % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % "2.8.0" % Test
 
+Compile / mainClass := Some("Main")
+run / mainClass := Some("Main")
+
+val jarName = "PursuitProtocol.jar"
+assembly / assemblyJarName := jarName
+
+// Merging strategies
+ThisBuild / assemblyMergeStrategy := {
+  case PathList("META-INF", _*) => MergeStrategy.discard
+  case "reference.conf" => MergeStrategy.concat
+  case _ => MergeStrategy.first
+}

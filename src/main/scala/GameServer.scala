@@ -1,3 +1,4 @@
+//GameServer.scala
 import NetGraphAlgebraDefs.{Action, NodeObject}
 import akka.actor.{ActorSystem, Props}
 import akka.http.scaladsl.Http
@@ -20,7 +21,7 @@ object GameServer extends SprayJsonSupport with DefaultJsonProtocol {
   var currentPoliceNode: Option[NodeObject] = None
   var gameIsOver: Boolean = false
 
-  def startGameServer(nodes: List[NodeObject], graph: MutableValueGraph[NodeObject, Action]): Unit = {
+  def startGameServer(nodes: List[NodeObject], perturbedGraph: MutableValueGraph[NodeObject, Action],originalGraph: MutableValueGraph[NodeObject, Action]): Unit = {
     implicit val system: ActorSystem = ActorSystem("police-thief-game")
     implicit val timeout: Timeout = Timeout(5.seconds)
 
@@ -28,8 +29,8 @@ object GameServer extends SprayJsonSupport with DefaultJsonProtocol {
 
 
     // Create actor instances for the thief and police
-    val thiefActor = system.actorOf(Props(new EntityActor(nodes, graph)), "thiefActor")
-    val policeActor = system.actorOf(Props(new EntityActor(nodes, graph)), "policeActor")
+    val thiefActor = system.actorOf(Props(new EntityActor(nodes, perturbedGraph, originalGraph)), "thiefActor")
+    val policeActor = system.actorOf(Props(new EntityActor(nodes, perturbedGraph, originalGraph)), "policeActor")
 
     // Define the route
     val route =
@@ -76,7 +77,7 @@ object GameServer extends SprayJsonSupport with DefaultJsonProtocol {
             complete(s"Game is not over!! Please play your next move!! ")
         }
       }
-    val bindingFuture = Http().newServerAt("localhost", 8080).bind(route)
+    val bindingFuture = Http().newServerAt("0.0.0.0", 8080).bind(route)
 
 
     println(s"Server online at http://localhost:8080/")
