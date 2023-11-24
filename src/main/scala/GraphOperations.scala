@@ -3,18 +3,20 @@
 
 import NetGraphAlgebraDefs.{Action, NodeObject}
 import com.google.common.graph.{MutableValueGraph, ValueGraphBuilder}
-import org.apache.logging.log4j.LogManager
+import org.slf4j.LoggerFactory
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 object GraphOperations {
   // Declare the graph as a global variable
-  private val logger = LogManager.getLogger(GraphOperations.getClass)
+  private val logger = LoggerFactory.getLogger(getClass)
   def createGraph(nodes: List[NodeObject], edges: List[Action]): MutableValueGraph[NodeObject, Action] = {
     val graph: MutableValueGraph[NodeObject, Action] = ValueGraphBuilder.directed().build()
     // Add nodes to the graph
     nodes.foreach(graph.addNode)
+    println("nodes")
+    println(graph.nodes())
     logger.info("nodes")
-    logger.info(graph.nodes())
+    logger.info(graph.nodes().toString)
 
     // Add edges to the graph with additional properties
     edges.foreach { action =>
@@ -28,7 +30,7 @@ object GraphOperations {
       }
     }
     logger.info("edges")
-    logger.info(graph.nodes())
+    logger.info(graph.nodes().toString)
     graph
   }
 

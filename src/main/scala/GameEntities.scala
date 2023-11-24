@@ -13,6 +13,7 @@ class EntityActor(nodes: List[NodeObject], perturbedGraph: MutableValueGraph[Nod
     case GetNode(nodeId) =>
       val response = GraphOperations.processGraph(nodes, nodeId,perturbedGraph,originalGraph)
       log.info(s"Actor ${self.path.name} updated with response: $response")
+      println(s"Actor ${self.path.name} updated with response: $response")
       if (self.path.name == "thiefActor") {
         if (response == -2) {
           sender() ! GetNodeResponse(s"Police wins! Thief is on node (${GameServer.currentThiefNode}) with no successors.")

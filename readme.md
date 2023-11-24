@@ -4,8 +4,7 @@
 - NetID: kjhave3@uic.edu
 - Name: Kirtan Jhaveri
 - youtube video:  
-  https://www.youtube.com/watch?v=SuSEvcrSB4k
-- Automated client GitHub link: 
+  https://youtu.be/M-H5kUmhmwU
 
 
 ## Table of Contents:

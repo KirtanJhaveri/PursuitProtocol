@@ -8,14 +8,14 @@ import akka.pattern.ask
 import akka.util.Timeout
 import com.google.common.graph.MutableValueGraph
 import spray.json.{DefaultJsonProtocol, RootJsonFormat}
-import org.apache.logging.log4j.LogManager
+import org.slf4j.LoggerFactory
 import scala.concurrent.duration._
 import scala.util.Random
 
 
 
 object GameServer extends SprayJsonSupport with DefaultJsonProtocol {
-  private val logger = LogManager.getLogger(getClass.getName)
+  private val logger = LoggerFactory.getLogger(getClass)
   // Enable JSON marshalling for the messages
   implicit val getNodeResponseFormat: RootJsonFormat[GetNodeResponse] = jsonFormat1(GetNodeResponse)
   var currentThiefNode: Option[NodeObject] = None
@@ -86,6 +86,7 @@ object GameServer extends SprayJsonSupport with DefaultJsonProtocol {
         }
     val bindingFuture = Http().newServerAt("0.0.0.0", 8080).bind(route)
 
+    println(s"Server online at http://localhost:8080/")
     logger.info(s"Server online at http://localhost:8080/")
   }
 

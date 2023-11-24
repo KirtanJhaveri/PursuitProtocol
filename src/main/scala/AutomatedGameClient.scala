@@ -4,7 +4,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
-import org.apache.logging.log4j.LogManager
+import org.slf4j.LoggerFactory
 import scala.concurrent.{Await, ExecutionContextExecutor, Future}
 import scala.concurrent.duration._
 import spray.json._
@@ -16,7 +16,7 @@ trait JsonSupport extends DefaultJsonProtocol {
 }
 
 object AutomatedClient extends JsonSupport {
-  private val logger = LogManager.getLogger(getClass.getName)
+  private val logger = LoggerFactory.getLogger(getClass)
   def play(): String = {
     implicit val system: ActorSystem = ActorSystem("AutomatedClient")
     implicit val materializer: ActorMaterializer = ActorMaterializer()
