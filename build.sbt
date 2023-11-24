@@ -9,7 +9,7 @@ lazy val root = (project in file("."))
 
 //scalaSource in Compile := baseDirectory.value / "src" / "main" / "scala"
 Test / classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.Flat
-test / fork := true
+//test / fork := true
 run / fork := true
 
 libraryDependencies ++= Seq(
@@ -20,11 +20,14 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http-spray-json" % "10.5.0",
   "com.typesafe.akka" %% "akka-http-testkit" % "10.5.0" % Test
 )
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.9" % Test
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % "2.8.0" % Test
+libraryDependencies += "org.apache.logging.log4j" % "log4j-api" % "2.20.0"
+libraryDependencies += "org.apache.logging.log4j" % "log4j-core" % "2.20.0"
+
 
 Compile / mainClass := Some("Main")
-run / mainClass := Some("Main")
+//run / mainClass := Some("Main")
 
 val jarName = "PursuitProtocol.jar"
 assembly / assemblyJarName := jarName

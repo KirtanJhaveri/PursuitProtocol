@@ -3,19 +3,18 @@
 
 import NetGraphAlgebraDefs.{Action, NodeObject}
 import com.google.common.graph.{MutableValueGraph, ValueGraphBuilder}
-
+import org.apache.logging.log4j.LogManager
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 object GraphOperations {
   // Declare the graph as a global variable
-
-
+  private val logger = LogManager.getLogger(GraphOperations.getClass)
   def createGraph(nodes: List[NodeObject], edges: List[Action]): MutableValueGraph[NodeObject, Action] = {
     val graph: MutableValueGraph[NodeObject, Action] = ValueGraphBuilder.directed().build()
     // Add nodes to the graph
     nodes.foreach(graph.addNode)
-    println("nodes")
-    println(graph.nodes())
+    logger.info("nodes")
+    logger.info(graph.nodes())
 
     // Add edges to the graph with additional properties
     edges.foreach { action =>
@@ -28,13 +27,8 @@ object GraphOperations {
         }
       }
     }
-//    edges.foreach { action =>
-//      val fromNode: NodeObject = nodes.find(_.id == action.fromNode.id).getOrElse(NodeObject(0, 0, 0, 0, 0, 0, 0, 0, 0))
-//      val toNode:NodeObject = nodes.find(_.id == action.fromNode.id).getOrElse(NodeObject(0, 0, 0, 0, 0, 0, 0, 0, 0))
-//      graph.putEdgeValue(fromNode, toNode, action)
-//    }
-    println("edges")
-    println(graph.nodes())
+    logger.info("edges")
+    logger.info(graph.nodes())
     graph
   }
 
@@ -52,7 +46,7 @@ object GraphOperations {
     if (successors.isEmpty)
       return -2 //no successors
     // Print the results (optional)
-    println(s"Successor nodes of node with ID $nodeId: $successors")
+    logger.debug(s"Successor nodes of node with ID $nodeId: $successors")
 //    println(s"Incident edges of node with ID $nodeId: $incidentEdges")
     val allIds = successors.map(_.id).toList
 //    println("all")
@@ -65,10 +59,10 @@ object GraphOperations {
 //    println("all jaccard")
 //    println(jaccardIndices)
     val bestSuccessor = jaccardIndices.toSeq.sortBy(-_._2).toMap
-    println("successors in descending")
-    println(bestSuccessor)
-    println("value")
-    println(bestSuccessor.values.head)
+//    println("successors in descending")
+//    println(bestSuccessor)
+//    println("value")
+//    println(bestSuccessor.values.head)
     if (bestSuccessor.values.head == -1)
       {
         -1
