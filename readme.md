@@ -1,10 +1,7 @@
 
 
 # PursuitProtocol
-- NetID: kjhave3@uic.edu
-- Name: Kirtan Jhaveri
-- youtube video:  
-  https://youtu.be/M-H5kUmhmwU
+- Demo: https://youtu.be/M-H5kUmhmwU
 
 
 ## Table of Contents:
