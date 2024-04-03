@@ -16,7 +16,7 @@
 - [Dependencies](#dependencies)
 
 ## Overview:
-This project implements a Police vs. Thief game played on graphs, leveraging Scala, Akka HTTP, and employing microservice architecture. The game focuses on strategic movements of Police and Thief characters within a graph-based environment. 
+This project implements a Police vs. Thief game played on graphs, leveraging Scala, Akka HTTP. The game focuses on strategic movements of Police and Thief characters within a graph-based environment. 
 
 ### How the Game Works :
 The thief and police hit their respective endpoints to get the information about their state or in other words their current position in the game/graph until one of them meets the winning or losing conditions.
@@ -47,7 +47,7 @@ The thief and police hit their respective endpoints to get the information about
 ## Features:
 
 - **Graph-Based Strategy**: Players navigate Police and Thief characters across nodes in a graph, employing graph algorithms for strategic movements and interactions.
-- **Akka Actors & Microservice Architecture**: Utilizes Akka Actors to encapsulate game functionalities, resembling microservices, ensuring independent behavior and asynchronous communication.
+- **Akka Actors **: Utilizes Akka Actors to encapsulate game functionalities, ensuring independent behavior and asynchronous communication.
 - **REST API Interaction**: Offers RESTful endpoints (`/get-node/thief`, `/get-node/police`, `/reset/game`,`/autoClient`) enabling external interaction with the game, providing specific actions and game state retrieval.
 
 ## Technologies:
@@ -55,7 +55,6 @@ The thief and police hit their respective endpoints to get the information about
 - **Akka HTTP**: Framework for building REST APIs and managing HTTP requests.
 - **Akka Actors**: Core implementation for modeling game entities and managing game state.
 
-*The design adopts microservice-like units through Akka Actors and exposes REST API endpoints, allowing external interaction and reflecting the principles of microservice architecture in the context of this graph-based game.*
 
 
 ## Deployment:
