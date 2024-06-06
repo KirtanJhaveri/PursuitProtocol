@@ -47,7 +47,7 @@ The thief and police hit their respective endpoints to get the information about
 ## Features:
 
 - **Graph-Based Strategy**: Players navigate Police and Thief characters across nodes in a graph, employing graph algorithms for strategic movements and interactions.
-- **Akka Actors **: Utilizes Akka Actors to encapsulate game functionalities, ensuring independent behavior and asynchronous communication.
+- **Akka Actors**: Utilizes Akka Actors to encapsulate game functionalities, ensuring independent behavior and asynchronous communication.
 - **REST API Interaction**: Offers RESTful endpoints (`/get-node/thief`, `/get-node/police`, `/reset/game`,`/autoClient`) enabling external interaction with the game, providing specific actions and game state retrieval.
 
 ## Technologies:
