@@ -51,10 +51,8 @@ The thief and police hit their respective endpoints to get the information about
 - **REST API Interaction**: Offers RESTful endpoints (`/get-node/thief`, `/get-node/police`, `/reset/game`,`/autoClient`) enabling external interaction with the game, providing specific actions and game state retrieval.
 
 ## Technologies:
-- **Scala**: Primary language for game logic and algorithms.
-- **Akka HTTP**: Framework for building REST APIs and managing HTTP requests.
-- **Akka Actors**: Core implementation for modeling game entities and managing game state.
-
+- **Scala**
+- **Akka**
 
 
 ## Deployment:
